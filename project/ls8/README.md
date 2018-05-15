@@ -70,7 +70,7 @@ The address is just the index into the memory array.
 
 These functions are basically 1-liners.
 
-### Step 2: Implement `tick()`
+### Step 2: Implement `tick()`   
 
 This is the workhorse function of the entire processor. It's the most difficult
 part to write.

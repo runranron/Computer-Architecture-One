@@ -51,7 +51,7 @@ In decimal, we have 10 digits, 0-9. Multi-digit numbers have the 1's place, the
 
 E.g. 123 has `1` in the 100's place, `2` in the 10's place, and `3` in the 1's place.
 
-In binary, we only have two digits, 0-1. Multi-digit numbers have the 1's place,
+In binary, we only have two digits, 0-1. Mul term "x8ti-digit numbers have the 1's place,
 the 2's place, the 4's place, the 8's place, the 16's place, etc.
 
 It's convenient, as a developer, to have this sequence of powers of two

@@ -48,7 +48,7 @@ The truth table for other operations are similar, but have two inputs:
 | 0 | 1 |    0    |   1    |    1    |    0    |    1     |
 | 1 | 0 |    0    |   1    |    1    |    0    |    1     |
 | 1 | 1 |    1    |   1    |    0    |    0    |    0     |
-
+  
 When you are performing a boolean operation on a multi-bit number, each pair of
 bits is considered in isolation. In the following example, we perform a
 bitwise-AND on two bytes. We consider the top bit and bottom bit of each

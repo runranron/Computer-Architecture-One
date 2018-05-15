@@ -56,6 +56,7 @@ class CPU {
         switch (op) {
             case 'MUL':
                 // !!! IMPLEMENT ME
+                this.reg[regA] = this.reg[regA] * this.reg[regB]
                 break;
         }
     }
@@ -68,11 +69,13 @@ class CPU {
         // from the memory address pointed to by the PC. (I.e. the PC holds the
         // index into memory of the instruction that's about to be executed
         // right now.)
+        const IR = this.ram.read(this.PC);
+
 
         // !!! IMPLEMENT ME
 
         // Debugging output
-        //console.log(`${this.PC}: ${IR.toString(2)}`);
+        console.log(`${this.PC}: ${IR.toString(2)}`);
 
         // Get the two bytes in memory _after_ the PC in case the instruction
         // needs them.
