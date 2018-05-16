@@ -24,7 +24,6 @@ class RAM {
     read(MAR) {
         // !!! IMPLEMENT ME
         // Read the value in address MAR and return it
-        console.log(this.mem[MAR]);
         return this.mem[MAR];
     }
 }
