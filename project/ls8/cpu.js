@@ -5,6 +5,10 @@ const LDI = 0b10011001;
 const PRN = 0b01000011;
 const HLT = 0b00000001;
 const MUL = 0b10101010;
+const PUSH = 0b01001101;
+const POP = 0b01001100;
+const CALL = 0b01001000;
+const MULT2PRINT = 0b00011000;
 
 /**
  * Class for simulating a simple Computer (CPU & memory)
@@ -60,9 +64,7 @@ class CPU {
         switch (op) {
             case 'MUL':
                 // !!! IMPLEMENT ME
-                const result = this.reg[regA] * this.reg[regB];
-                this.reg[regA] = result;
-                break;
+                return regA * regB;
         }
     }
 
@@ -80,7 +82,6 @@ class CPU {
 
         // Debugging output
         // console.log(`${this.PC}: ${IR.toString(2)}`);
-
         // Get the two bytes in memory _after_ the PC in case the instruction
         // needs them.
 
@@ -90,7 +91,7 @@ class CPU {
 
         // Execute the instruction. Perform the actions for the instruction as
         // outlined in the LS-8 spec.
-
+        let advance = true;
         // !!! IMPLEMENT ME
         switch(IR) {
             case LDI:
@@ -103,7 +104,28 @@ class CPU {
                 this.stopClock();
                 break;
             case MUL:
-                this.alu('MUL', operandA, operandB);
+                this.reg[operandA] = this.alu('MUL', this.reg[operandA], this.reg[operandB]);
+                break;
+            case PUSH:
+                this.ram.SP--;
+                this.ram.mem[this.ram.SP] = this.reg[operandA];
+                break;
+            case POP:
+                this.reg[operandA] = this.ram.mem[this.ram.SP];
+                this.ram.mem[this.ram.SP] = 0;
+                this.ram.SP = Math.min(this.ram.SP+1, 0xF4);
+                break;
+            case CALL:
+                this.ram.SP--;
+                this.ram.mem[this.ram.SP] = this.PC+2;
+                advance = false;
+                this.PC = operandA;
+            case MULT2PRINT:
+                console.log(this.alu('MUL', this.reg[0], 2));
+                this.PC = this.ram.mem[this.ram.SP];
+                this.ram.mem[this.ram.SP] = 0;
+                this.ram.SP = Math.min(this.ram.SP+1, 0xF4);
+                advance = false;
                 break;
             default:
                 console.log(`unknown value at ${this.PC}: ${IR.toString(2)}`)
@@ -117,7 +139,9 @@ class CPU {
         // for any particular instruction.
         
         // !!! IMPLEMENT ME
-        this.PC += (IR >> 6) + 1;
+        if (advance === true) {
+            this.PC += (IR >> 6) + 1;
+        }
     }
 }
 
